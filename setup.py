@@ -3,12 +3,12 @@ from setuptools import setup, find_packages
 setup(
     name="mycli",
     version="0.1.0",
-    author="Your Name",
-    author_email="your.email@example.com",
-    description="A CLI tool with optional operations",
+    author="Anil Kumar",
+    author_email="anil.kumar13@tcs.com",
+    description="A CLI tool convert logfiles to json",
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
-    url="https://github.com/yourusername/mycli",
+    url="https://github.com/wolwo619/mycli",
     packages=find_packages(),
     entry_points={
         'console_scripts': [
