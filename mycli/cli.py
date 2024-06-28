@@ -36,7 +36,7 @@ def convert_logs_to_single_json(log_files, json_file):
     """
     combined_logs = read_json_file(json_file)
     for log_file in log_files:
-        with open(log_file, 'r') as file:
+        with open(log_file, 'r', encoding="utf-8") as file:
             for line in file:
                 log_entry = line.strip()
                 if log_entry:
