@@ -60,19 +60,43 @@ def convert_logs_to_single_json(log_files, json_file):
     print(f"Log files have been combined into JSON file '{json_file}'.")
     return combined_logs
 
-def find_most_least_common_value(dict_list, key, most_common=True):
+
+def find_least_frequent_value(dict_list, key):
     """
-    Find the most frequent value for a given key in a list of dictionaries.
+    Find the least frequent value for a given key in a list of dictionaries.
     :param dict_list: List of dictionaries.
-    :param key: Key to find the most frequent value for.
+    :param key: Key to find the least frequent value for.
+    :return: The least frequent value and its count.
     """
     # Extract the values for the specified key
     values = [d[key] for d in dict_list if key in d]
 
     # Count the occurrences of each value
     value_counts = Counter(values)
-    common_value, count = value_counts.most_common(1 if most_common else -1)[0]
-    print(f'{common_value} occurred {count} times')
+
+    # Find the least common value and its count
+    least_common_value, count = value_counts.most_common()[-1]
+    print(f'{least_common_value} occurred {count} times')
+
+
+def find_most_frequent_value(data, key):
+    """
+    Find the most frequent value for a given key in a list of dictionaries.
+    :param data: List of dictionaries.
+    :param key: Key to find the most frequent value for.
+    :return: The most frequent value and its count.
+    """
+    # Extract the values for the specified key
+    values = [d[key] for d in data if key in d]
+
+    # Count the occurrences of each value
+    value_counts = Counter(values)
+
+    # Find the most common value and its count
+    most_common_value, count = value_counts.most_common(1)[0]
+
+    print(f'{most_common_value} occurred {count} times')
+
 
 def calculate_events_per_second(log_entries):
     """
@@ -109,24 +133,34 @@ def main():
         description="Convert multiple log files into a single JSON file.")
     parser.add_argument("log_files", nargs="+", help="Paths to the log files")
     parser.add_argument("json_file", help="Path to the output JSON file")
-    #Assuming Option had to made mandatory
-    parser.add_argument("operation", choices=["mfip", "lfip", "eps", "bytes"],
-                        help="Operation to perform, mfip: most frequent IP  lfip: least frequent IP  eps: events per second  bytes: total amount of bytes exchanged")
-
+    # Assuming Option had to made mandatory
+    parser.add_argument('--mfip', action='store_true',
+                        help='Print most frequent IP')
+    parser.add_argument('--lfip', action='store_true',
+                        help='Print least frequent IP')
+    parser.add_argument('--eps', action='store_true',
+                        help='Prints events per second')
+    parser.add_argument('--bytes', action='store_true',
+                        help='Prints total amount of bytes exchanged')
     args = parser.parse_args()
 
     logs = convert_logs_to_single_json(args.log_files, args.json_file)
 
-    if args.operation == 'mfip':
-        find_most_least_common_value(logs, "Client IP address", most_common=True)
+    if args.mfip:
+        find_most_frequent_value(
+            logs, "Client IP address")
 
-    elif args.operation == 'lfip':
-        find_most_least_common_value(logs, "Client IP address", most_common=False)
-    elif args.operation == 'eps':
+    elif args.lfip:
+        find_least_frequent_value(
+            logs, "Client IP address")
+    elif args.eps:
         calculate_events_per_second(logs)
-    elif args.operation == 'bytes':
+    elif args.bytes:
         calculate_bytes_exchanged(logs)
+    else:
+        pass
 
 
 if __name__ == "__main__":
     main()
+
