@@ -3,11 +3,18 @@ This tool allows you to combine multiple log files into a single JSON file for e
 
 # Usage
 
-## Directly running python file
-Example:
-```bash
-$ Python cli.py 'test.log' 'test.log2' 'outputfile.json' --mfip
-```
+## Install and Run Locally
+If you want to install and run your CLI tool locally without Docker:
+
+### open the cmd terminal an run below commnads
+pip install .
+
+mycli test.log test.json --lfip
+
+or 
+
+mycli test.log test.json
+
 ## Running through docker container
 
 ### Build the Docker Image:
