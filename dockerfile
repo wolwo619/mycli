@@ -7,8 +7,11 @@ WORKDIR /app
 # Copy the current directory contents into the container at /app
 COPY . /app
 
-# Make your script executable
-RUN chmod +x mycli.py
+# Install any needed packages specified in pyproject.toml
+RUN pip install .
 
-# Run mycli.py by default when the container launches
-CMD ["./mycli.py"]
+# Make your script executable
+RUN chmod +x mycli/cli.py
+
+# Run mycli by default when the container starts
+ENTRYPOINT ["mycli"]

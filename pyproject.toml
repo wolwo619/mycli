@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mycli"
+version = "0.1.0"
+description = "Convert logs file to json"
+readme = "README.md"
+authors = [
+    { name = "Anil Kumar", email = "anil.kumar13@tcs.com" }
+]
+license = { text = "MIT" }
+dependencies = []
+
+[project.scripts]
+mycli = "mycli.cli:main"
